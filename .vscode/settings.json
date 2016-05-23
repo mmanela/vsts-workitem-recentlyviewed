@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "**/*.js": {
+            "when": "$(basename).ts"
+        },
+        "**/*.vsix": true,
+        "*.gitignore": true
+    }
+}

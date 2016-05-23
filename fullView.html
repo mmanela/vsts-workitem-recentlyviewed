@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script src="scripts/VSS.SDK.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/RecentlyViewed.css">
+</head>
+
+<body>
+    <script type="text/javascript">
+        // Initialize framework 
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            configureModuleLoader: true
+        });
+        
+        // Load main entry point for extension
+        VSS.require(["scripts/RecentlyViewed"], function (RecentlyViewed) {
+            // Loading succeeded
+            var recentlyViewedGroupView = new RecentlyViewed.RecentlyViewedGroupView();
+            recentlyViewedGroupView.initialize();
+            
+            VSS.notifyLoadSucceeded();    
+        });
+    </script>
+
+    <div class="rv-full"></div>
+</body>
+
+</html>

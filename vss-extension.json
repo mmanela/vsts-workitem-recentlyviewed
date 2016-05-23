@@ -1,0 +1,92 @@
+{
+    "manifestVersion": 1,
+    "id": "vsts-workitem-recentlyviewed",
+    "version": "0.1.0",
+    "name": "Who recently viewed a workitem?",
+    "scopes": [
+        "vso.work"
+    ],
+    "description": "This extension provides a new a work item group that shows who has recently viewed the current work item",
+    "publisher": "mmanela",
+    "public": false,
+    "icons": {
+        "default": "img/logo.png"
+    },
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "tags": [
+        "Work Item"
+    ],
+    "content": {
+        "details": {
+            "path": "details.md"
+        }
+    },
+    "links": {
+        "home": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        },
+        "getstarted": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        },
+        "learn": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        },
+        "support": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        },
+        "repository": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        },
+        "issues": {
+            "uri": "https://github.com/mmanela/vsts-workitem-recentlyviewed"
+        }
+    },
+    "branding": {
+        "color": "rgb(220, 235, 252)",
+        "theme": "light"
+    },
+    "files": [
+        {
+            "path": "img",
+            "addressable": true
+        },
+        {
+            "path": "scripts",
+            "addressable": true
+        },
+        {
+            "path": "styles",
+            "addressable": true
+        },
+        {
+            "path": "recentlyViewedGroup.html",
+            "addressable": true
+        },
+        {
+            "path": "fullView.html",
+            "addressable": true
+        }
+    ],
+    "categories": [
+        "Integrate"
+    ],
+    "contributions": [
+        {  
+            "id": "recently-viewed-form-group",
+            "type": "ms.vss-work-web.work-item-form-group",
+            "description": "Recently viewed work item form group",
+            "targets": [
+                "ms.vss-work-web.work-item-form"
+            ],
+            "properties": {
+                "name": "Who's viewed this?",
+                "uri": "recentlyViewedGroup.html",
+                "height": 250
+            }
+        }
+    ]
+}
