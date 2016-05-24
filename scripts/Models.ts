@@ -5,12 +5,6 @@ export class WorkItemVisit {
     public user: UserContext;
 }
 
-export class IdentityReference {
-    id: string;
-    displayName: string;
-    uniqueName: string;
-    isIdentity: boolean;
-}
 
 export class Constants {
     public static StorageKey: string = "WorkItemVisits";

@@ -87,6 +87,15 @@
                 "uri": "recentlyViewedGroup.html",
                 "height": 250
             }
+        },
+        {
+            "id": "recently-viewed-dialog",
+            "type": "ms.vss-web.control",
+            "description": "The full view of who recently visited a work item",
+            "targets": [],
+            "properties": {
+                "uri": "fullView.html"
+            }
         }
     ]
 }

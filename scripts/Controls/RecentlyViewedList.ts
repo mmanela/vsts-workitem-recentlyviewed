@@ -1,4 +1,4 @@
-/// <reference path='../typings/moment/moment.d.ts' />
+/// <reference path='../../typings/moment/moment.d.ts' />
 
 import Q = require("q");
 import VSS_Service = require("VSS/Service");
@@ -9,7 +9,7 @@ import {CollapsiblePanel} from "VSS/Controls/Panels";
 import * as WitClient from "TFS/WorkItemTracking/RestClient";
 import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";
 import {WorkItemFormNavigationService} from "TFS/WorkItemTracking/Services";
-import { WorkItemVisit, IdentityReference, Constants} from "scripts/Models";
+import { WorkItemVisit, Constants} from "scripts/Models";
 import {manager} from "scripts/observer"
 
 

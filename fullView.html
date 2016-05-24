@@ -20,14 +20,14 @@
         // Load main entry point for extension
         VSS.require(["scripts/RecentlyViewed"], function (RecentlyViewed) {
             // Loading succeeded
-            var recentlyViewedGroupView = new RecentlyViewed.RecentlyViewedGroupView();
-            recentlyViewedGroupView.initialize();
+            var recentlyViewedFullView = new RecentlyViewed.RecentlyViewedFullView();
+            recentlyViewedFullView.initialize();
             
             VSS.notifyLoadSucceeded();    
         });
     </script>
 
-    <div class="rv-full"></div>
+    <div class="rv-fullView"></div>
 </body>
 
 </html>

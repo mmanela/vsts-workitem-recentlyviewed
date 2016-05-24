@@ -1,16 +1,43 @@
 ﻿/// <reference path='../typings/tsd.d.ts' />
 import {Control} from "VSS/Controls";
-import * as Controls from "scripts/Controls";
+import {RecentlyViewedList, IRecentlyViewedListOptions} from "scripts/Controls/RecentlyViewedList";
+import {RecentlyViewedGrid} from "scripts/Controls/RecentlyViewedGrid";
 import {WorkItemVisit, Constants} from "scripts/Models";
 import * as Observer from "scripts/Observer";
 import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
 
+
+function getWorkItemVisits(workItemId: number){
+    
+}
+
+export class RecentlyViewedFullView  {
+   public initialize() {
+        console.log("RecentlyViewedFullView loading");
+
+        var rvGrid = <RecentlyViewedGrid>Control.createIn(
+            RecentlyViewedGrid, 
+            $(".rv-fullView"));
+        
+        WorkItemFormService.getService().then((workItemFormService:any) => {
+           workItemFormService.getId().then((workItemId) => {       
+                Observer.manager.getWorkItemVisits(workItemId).then((visits) => {
+                    rvGrid.render(workItemId, visits);
+                });
+           });
+        });
+
+    }
+}
+
+
+
 export class RecentlyViewedGroupView  {
     public initialize() {
-        console.log("RecentlyViewed.js loading");
+        console.log("RecentlyViewedGroupView loading");
 
-        var rvList = <Controls.RecentlyViewedList>Control.createIn<Controls.IRecentlyViewedListOptions>(
-            Controls.RecentlyViewedList, 
+        var rvList = <RecentlyViewedList>Control.createIn<IRecentlyViewedListOptions>(
+            RecentlyViewedList, 
             $(".rv-group"), 
             { maxCount: Constants.GroupViewVisitCount });
         
@@ -22,7 +49,7 @@ export class RecentlyViewedGroupView  {
         
         let $fullViewLink = $("<div class='rv-fullViewLink' />").append("<button class='btn btn-secondary'>Full View</button>");
         $fullViewLink.click(() => {
-            console.log("Show full view");
+            this._showDialog();
         })
         
         $fullViewLink.appendTo($(".rv-group"));
@@ -34,5 +61,26 @@ export class RecentlyViewedGroupView  {
         });
         
         Observer.manager.registerOnLoadCallback(render);
+    }
+    
+     private _showDialog() {
+        VSS.getService(VSS.ServiceIds.Dialog).then((dialogService: IHostDialogService) => {
+            var extInfo = VSS.getExtensionContext();
+
+            var dialogOptions: IHostDialogOptions = {
+                title: "Who visited this work item?",
+                width: 800,
+                height: 600,
+                buttons: null
+            };
+
+            var contributionConfig = {
+            };
+
+            dialogService.openDialog(
+                `${Constants.ExtensionPublisher}.${Constants.ExtensionName}.recently-viewed-dialog`,
+                dialogOptions,
+                contributionConfig);
+        });
     }
 }
