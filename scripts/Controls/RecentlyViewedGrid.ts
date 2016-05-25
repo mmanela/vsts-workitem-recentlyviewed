@@ -55,14 +55,15 @@ export class RecentlyViewedGrid extends Control<any> {
                     Avatar: this._getImageUrl(visit.user),
                     Name: visit.user.name,
                     Email: visit.user.email || visit.user.uniqueName,
-                    Date: moment(visit.date).format(Constants.FullDateString) 
+                    Date: visit.date
                 };
           });
           
           let options:Grids.IGridOptions = {
             source: gridSource,
-            columns: this._getGridColumns(),
-            height: "100%"
+            columns: this._getGridColumns(gridSource),
+            height: "100%",
+            useBowtieStyle: true
           };
           
           Grids.Grid.createIn<Grids.IGridOptions>(Grids.Grid, this._visitsContainer, options);
@@ -79,7 +80,7 @@ export class RecentlyViewedGrid extends Control<any> {
     
     
     
-    private _getGridColumns(): Grids.IGridColumn[] {
+    private _getGridColumns(visitGridRows:IVisitGridRow[]): Grids.IGridColumn[] {
         if (!this._gridColumns) {
             this._gridColumns = <Grids.IGridColumn[]>[
                 {
@@ -113,7 +114,11 @@ export class RecentlyViewedGrid extends Control<any> {
                     index: "Date",
                     text: "Date",
                     width: 200,
-                    canSortBy: true
+                    canSortBy: true,
+                    getColumnValue: (dataIndex, columnIndex, columnOrder) => {
+                        var date = visitGridRows[dataIndex].Date;
+                        return moment(date).format(Constants.FullDateString);
+                    }
                 }
             ]
         };

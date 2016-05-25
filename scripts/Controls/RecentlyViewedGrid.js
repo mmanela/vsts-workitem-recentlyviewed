@@ -28,13 +28,14 @@ define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids", "scripts/Mod
                         Avatar: _this._getImageUrl(visit.user),
                         Name: visit.user.name,
                         Email: visit.user.email || visit.user.uniqueName,
-                        Date: moment(visit.date).format(Models_1.Constants.FullDateString)
+                        Date: visit.date
                     };
                 });
                 var options = {
                     source: gridSource,
-                    columns: this._getGridColumns(),
-                    height: "100%"
+                    columns: this._getGridColumns(gridSource),
+                    height: "100%",
+                    useBowtieStyle: true
                 };
                 Grids.Grid.createIn(Grids.Grid, this._visitsContainer, options);
             }
@@ -44,7 +45,7 @@ define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids", "scripts/Mod
             identityImageUrl = identityImageUrl + "&identifier=" + user.uniqueName + "&identifierType=0";
             return identityImageUrl;
         };
-        RecentlyViewedGrid.prototype._getGridColumns = function () {
+        RecentlyViewedGrid.prototype._getGridColumns = function (visitGridRows) {
             if (!this._gridColumns) {
                 this._gridColumns = [
                     {
@@ -77,7 +78,11 @@ define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids", "scripts/Mod
                         index: "Date",
                         text: "Date",
                         width: 200,
-                        canSortBy: true
+                        canSortBy: true,
+                        getColumnValue: function (dataIndex, columnIndex, columnOrder) {
+                            var date = visitGridRows[dataIndex].Date;
+                            return moment(date).format(Models_1.Constants.FullDateString);
+                        }
                     }
                 ];
             }

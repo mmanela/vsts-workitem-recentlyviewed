@@ -17,7 +17,7 @@ export class Constants {
     
     public static GroupViewVisitCount = 4;
     
-    public static FullDateString = 'MMMM Do YYYY, h:mm:ss a';
+    public static FullDateString = 'LLLL';
 }
 
 
