@@ -1,5 +1,3 @@
-/// <reference path='../../typings/moment/moment.d.ts' />
-
 import Q = require("q");
 import VSS_Service = require("VSS/Service");
 import * as Utils_Core from "VSS/Utils/Core";

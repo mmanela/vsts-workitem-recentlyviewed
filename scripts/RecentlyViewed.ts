@@ -1,5 +1,4 @@
-﻿/// <reference path='../typings/tsd.d.ts' />
-import {Control} from "VSS/Controls";
+﻿import {Control} from "VSS/Controls";
 import {RecentlyViewedList, IRecentlyViewedListOptions} from "scripts/Controls/RecentlyViewedList";
 import {RecentlyViewedGrid} from "scripts/Controls/RecentlyViewedGrid";
 import {WorkItemVisit, Constants} from "scripts/Models";

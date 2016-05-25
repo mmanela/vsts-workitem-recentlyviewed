@@ -1,5 +1,4 @@
-﻿/// <reference path='../typings/tsd.d.ts' />
-import Q = require("q");
+﻿import Q = require("q");
 import * as Utils_Core from "VSS/Utils/Core";
 import * as Utils_String from "VSS/Utils/String";
 import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
