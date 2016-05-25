@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids"], function (require, exports, Controls_1, Grids) {
+define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids", "scripts/Models"], function (require, exports, Controls_1, Grids, Models_1) {
     "use strict";
     var RecentlyViewedGrid = (function (_super) {
         __extends(RecentlyViewedGrid, _super);
@@ -28,13 +28,13 @@ define(["require", "exports", "VSS/Controls", "VSS/Controls/Grids"], function (r
                         Avatar: _this._getImageUrl(visit.user),
                         Name: visit.user.name,
                         Email: visit.user.email || visit.user.uniqueName,
-                        Date: moment(visit.date).format()
+                        Date: moment(visit.date).format(Models_1.Constants.FullDateString)
                     };
                 });
                 var options = {
                     source: gridSource,
                     columns: this._getGridColumns(),
-                    height: "500"
+                    height: "100%"
                 };
                 Grids.Grid.createIn(Grids.Grid, this._visitsContainer, options);
             }

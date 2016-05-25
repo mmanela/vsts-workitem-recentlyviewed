@@ -97,7 +97,7 @@ export class RecentlyViewedList extends Control<IRecentlyViewedListOptions> {
         var dateMoment = moment(visit.date.toLocaleString());
         var dateStringFromNow = dateMoment.fromNow();
         var dateElem = $("<div />").addClass("visited-date").text(`${dateStringFromNow}`);
-        dateElem.attr("title", dateMoment.format());
+        dateElem.attr("title", dateMoment.format(Constants.FullDateString));
         dateElem.appendTo($result);
 
         return $result;

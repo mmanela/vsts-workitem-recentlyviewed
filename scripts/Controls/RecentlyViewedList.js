@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define(["require", "exports", "VSS/Controls"], function (require, exports, Controls_1) {
+define(["require", "exports", "VSS/Controls", "scripts/Models"], function (require, exports, Controls_1, Models_1) {
     "use strict";
     var RecentlyViewedList = (function (_super) {
         __extends(RecentlyViewedList, _super);
@@ -56,7 +56,7 @@ define(["require", "exports", "VSS/Controls"], function (require, exports, Contr
             var dateMoment = moment(visit.date.toLocaleString());
             var dateStringFromNow = dateMoment.fromNow();
             var dateElem = $("<div />").addClass("visited-date").text("" + dateStringFromNow);
-            dateElem.attr("title", dateMoment.format());
+            dateElem.attr("title", dateMoment.format(Models_1.Constants.FullDateString));
             dateElem.appendTo($result);
             return $result;
         };

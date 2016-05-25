@@ -55,14 +55,14 @@ export class RecentlyViewedGrid extends Control<any> {
                     Avatar: this._getImageUrl(visit.user),
                     Name: visit.user.name,
                     Email: visit.user.email || visit.user.uniqueName,
-                    Date: moment(visit.date).format() 
+                    Date: moment(visit.date).format(Constants.FullDateString) 
                 };
           });
           
           let options:Grids.IGridOptions = {
             source: gridSource,
             columns: this._getGridColumns(),
-            height: "500"
+            height: "100%"
           };
           
           Grids.Grid.createIn<Grids.IGridOptions>(Grids.Grid, this._visitsContainer, options);

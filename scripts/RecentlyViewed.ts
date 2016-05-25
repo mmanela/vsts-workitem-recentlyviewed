@@ -65,6 +65,7 @@ export class RecentlyViewedGroupView  {
     
      private _showDialog() {
         VSS.getService(VSS.ServiceIds.Dialog).then((dialogService: IHostDialogService) => {
+            
             var extInfo = VSS.getExtensionContext();
 
             var dialogOptions: IHostDialogOptions = {

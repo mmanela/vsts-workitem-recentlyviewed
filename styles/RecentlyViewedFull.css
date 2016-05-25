@@ -1,0 +1,17 @@
+.rv-fullView .visited-image-cell {
+    width:26px;
+}
+
+.rv-fullView .visited-image-cell > img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+html, body, .rv-fullView, .rv-fullView > div, .rv-container, .grid {
+    height: 100%;
+}
+
+.rv-fullView {
+    padding-bottom: 10px;
+}

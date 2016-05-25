@@ -16,6 +16,8 @@ export class Constants {
     public static MaxVisitsToStore = 1000;
     
     public static GroupViewVisitCount = 4;
+    
+    public static FullDateString = 'MMMM Do YYYY, h:mm:ss a';
 }
 
 
