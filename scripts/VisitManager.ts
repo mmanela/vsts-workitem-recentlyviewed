@@ -1,6 +1,5 @@
 ﻿/// <reference path='../typings/tsd.d.ts' />
 import Q = require("q");
-import * as VSSService from "VSS/Service";
 import * as Utils_Core from "VSS/Utils/Core";
 import * as Utils_String from "VSS/Utils/String";
 import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
@@ -59,7 +58,7 @@ var observerProvider = () => {
 VSS.register(`${Models.Constants.ExtensionPublisher}.${Models.Constants.ExtensionName}.recently-viewed-form-group`, observerProvider);
 VSS.register('recently-viewed-form-group', observerProvider);
 
-export class VisitManager {
+class VisitManager {
     constructor() {
     }
 

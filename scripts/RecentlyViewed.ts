@@ -3,7 +3,7 @@ import {Control} from "VSS/Controls";
 import {RecentlyViewedList, IRecentlyViewedListOptions} from "scripts/Controls/RecentlyViewedList";
 import {RecentlyViewedGrid} from "scripts/Controls/RecentlyViewedGrid";
 import {WorkItemVisit, Constants} from "scripts/Models";
-import * as Observer from "scripts/Observer";
+import * as VisitManager from "scripts/VisitManager";
 import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
 
 
@@ -21,7 +21,7 @@ export class RecentlyViewedFullView  {
         
         WorkItemFormService.getService().then((workItemFormService:any) => {
            workItemFormService.getId().then((workItemId) => {       
-                Observer.manager.getWorkItemVisits(workItemId).then((visits) => {
+                VisitManager.manager.getWorkItemVisits(workItemId).then((visits) => {
                     rvGrid.render(workItemId, visits);
                 });
            });
@@ -42,7 +42,7 @@ export class RecentlyViewedGroupView  {
             { maxCount: Constants.GroupViewVisitCount });
         
         var render = (workItemId) => {
-            Observer.manager.getWorkItemVisits(workItemId).then((visits) => {
+            VisitManager.manager.getWorkItemVisits(workItemId).then((visits) => {
                 rvList.render(workItemId, visits);
             });
         };
@@ -60,7 +60,7 @@ export class RecentlyViewedGroupView  {
            });
         });
         
-        Observer.manager.registerOnLoadCallback(render);
+        VisitManager.manager.registerOnLoadCallback(render);
     }
     
      private _showDialog() {
