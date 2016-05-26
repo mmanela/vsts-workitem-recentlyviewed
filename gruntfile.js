@@ -39,6 +39,7 @@
     
 
 
+    // TEMPORARY: This is only hear until the grunt-typings project is update for the latest version (https://github.com/typings/grunt-typings)
     grunt.registerTask('typings', 'A Grunt plugin for typings', function() {
         var options = this.options({
           cwd: process.cwd()
