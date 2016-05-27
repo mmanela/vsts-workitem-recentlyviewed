@@ -31,7 +31,6 @@ var observerProvider = () => {
         onLoaded: (args: WitExtensionContracts.IWorkItemLoadedArgs) => {
             
             if (args && !args.isNew) {
-                console.log(`onloaded:${args.id}`);
                 manager.fireOnLoadCallback(args.id);
                 Utils_Core.delay(this, 3000, _visitDelegate, [args.id])
             } else {
@@ -43,7 +42,6 @@ var observerProvider = () => {
         onUnloaded: (args: WitExtensionContracts.IWorkItemChangedArgs) => {
             
             if (args) {
-                console.log(`onloaded:${args.id}`);
                 manager.fireOnUnloadCallback(args.id);
             }
             else{
@@ -84,93 +82,101 @@ class VisitManager {
         }
     }
 
+    public recordVisit(workItemId: number): IPromise<Models.WorkItemVisitsDocument> {
+        console.log(`Recording visit for work item ${workItemId}`);
+        return this._recordVisitWithRetries(workItemId, Models.Constants.RecordRetryAttempts);
+    }
 
-    public recordVisit(workItemId: number, revision?: number): IPromise<void> {
-        console.log(`Visited work item ${workItemId}`);
-        var defer = Q.defer<void>();
-
-        this._beginGetVisits(workItemId).then((visits) => {
-            if (!visits) {
-                visits = [];
+    private _recordVisitWithRetries(workItemId: number, attempt: number): IPromise<Models.WorkItemVisitsDocument> {
+        if(attempt === 0) {
+            return Q.reject('Unable to record visit due to repeated concurrency issues');
+        }
+        
+        let update = (doc:Models.WorkItemVisitsDocument) => {
+           return this._updateVisitDocument(doc).then((updatedDoc) => {
+                return Q(updatedDoc);
+            }, (reason) => {
+                return this._recordVisitWithRetries(workItemId, --attempt);
+            });
+        };
+        
+        return this._getVisitsDocument(workItemId).then((document) => {
+            if (!document) {
+                document = new Models.WorkItemVisitsDocument(workItemId);
             }
 
-            this._mergeVisits(workItemId, revision, visits);
-            defer.resolve(null);
+            return update(document);
+            
         }, () => {
             // This happens on first time get the document
-            var visits: Models.WorkItemVisit[] = [];
-
-            this._mergeVisits(workItemId, revision, visits);
-            defer.resolve(null);
+            return update(new Models.WorkItemVisitsDocument(workItemId));
         });
 
-        return defer.promise;
     }
 
     public getWorkItemVisits(workItemId: number): IPromise<Models.WorkItemVisit[]> {
         var defer = Q.defer<Models.WorkItemVisit[]>();
         
         var workItemVisits: Models.WorkItemVisit[] = [];
-        this._beginGetVisits(workItemId).then((visits) => {
-            if (visits && visits.length > 0) {
-                defer.resolve(visits);
+        this._getVisitsDocument(workItemId).then((document) => {
+            if (document && document.workItemId === workItemId && document.visits) {
+                defer.resolve(document.visits);
             }
             else {
                 defer.resolve(workItemVisits);
             }
+        }, (reason) => {
+             defer.resolve(workItemVisits);
         });
 
         return defer.promise;
     }
 
-    public resetWorkItemVisits(id: number): IPromise<void> {
+    public deleteVisitsDocument(workItemId: number): IPromise<void> {
         var defer = Q.defer<void>();
-        var visits: Models.WorkItemVisit[] = [];
 
         VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
-            dataService.setValue<Models.WorkItemVisit[]>(Models.getStorageKey(id), visits);
+            dataService.deleteDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(workItemId));
             defer.resolve(null);
         });
 
         return defer.promise;
     }
 
-    private _beginGetVisits(id: number): IPromise<Models.WorkItemVisit[]> {
+    private _getVisitsDocument(id: number): IPromise<Models.WorkItemVisitsDocument> {
         var defer = Q.defer();
 
         VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
-            dataService.getValue<Models.WorkItemVisit[]>(Models.getStorageKey(id)).then((visits) => {
-                defer.resolve(visits);
+            dataService.getDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(id)).then((document) => {
+                defer.resolve(document);
             }, (reason) => {
-                console.error(`Unable to get visits: ${reason}`);
+                defer.reject(`Unable to get visits: ${reason}`);
             });
         });
 
         return defer.promise;
     }
 
-    private _mergeVisits(id: number, revision: number, visits: Models.WorkItemVisit[]): void {
+    private _updateVisitDocument(document: Models.WorkItemVisitsDocument): IPromise<Models.WorkItemVisitsDocument> {
         var visitDate = new Date();
         var visit = new Models.WorkItemVisit();
 
         // toJSON correctly formats a date string for json serialization/deserialization
         visit.date = visitDate.toJSON();
-        visit.workItemId = id;
+        visit.workItemId = document.workItemId;
         visit.user = VSS.getWebContext().user;
            
-        if (revision > 0) {
-            visit.revision = revision;
-        }
-
-        if(visits.length > Models.Constants.MaxVisitsToStore){
-            var deltaCount = visits.length - Models.Constants.MaxVisitsToStore;
-            visits = visits.splice(deltaCount);
+        if(document.visits.length > Models.Constants.MaxVisitsToStore){
+            var deltaCount = document.visits.length - Models.Constants.MaxVisitsToStore;
+            document.visits = document.visits.splice(deltaCount);
         }
         
-        visits.push(visit);
+        document.visits.push(visit);
 
-        VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
-            dataService.setValue<Models.WorkItemVisit[]>(Models.getStorageKey(id), visits);
+       return  VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
+            return dataService.setDocument(Models.Constants.DocumentCollectionName, document);
+        }, (reason) => {
+            return Q.reject(`Unable to set visits: ${reason}`);
         });
     }
 

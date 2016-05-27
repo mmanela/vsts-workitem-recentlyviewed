@@ -5,6 +5,29 @@ export class WorkItemVisit {
     public user: UserContext;
 }
 
+export class WorkItemVisitsDocument {
+    
+    constructor(public workItemId: number) {
+        this.visits = [];
+        this.__etag = 0;
+        
+        this.id = getStorageKey(workItemId);
+    }
+    
+    /**
+     * The documentId
+     */
+    public id: string;
+    
+    /**
+     * The work item visits s
+     */
+    public visits: WorkItemVisit[];
+    
+    public __etag: number;
+    
+}
+
 
 export class Constants {
     public static StorageKey: string = "WorkItemVisits";
@@ -17,10 +40,14 @@ export class Constants {
     
     public static GroupViewVisitCount = 4;
     
-    public static FullDateString = 'LLLL';
+    public static FullDateString = "LLLL";
+    
+    public static DocumentCollectionName = "WorkItemVisitCollection";
+    
+    public static RecordRetryAttempts = 3;
 }
 
 
 export function getStorageKey(workItemId: number){
-    return `TEMP2-${Constants.StorageKey}-${workItemId}`;
+    return `TEMP1-${Constants.StorageKey}-${workItemId}`;
 }
