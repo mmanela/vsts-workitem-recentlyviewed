@@ -9,7 +9,6 @@
     "grunt-typings": "^0.1.5",
     "moment": "*",
     "tfx-cli": "^0.3.13",
-    "typings-core": "^1.0.1",
     "vss-web-extension-sdk": "^1.95.2"
   },
   "name": "vsts-workitem-recentlyviewed",
