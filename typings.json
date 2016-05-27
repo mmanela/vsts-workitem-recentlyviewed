@@ -6,7 +6,7 @@
     "knockout": "registry:dt/knockout#0.0.0+20160428162840",
     "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#7ad4e09016898d9c4837e250121fef2aedbecaaa",
     "moment-node": "github:DefinitelyTyped/DefinitelyTyped/moment/moment-node.d.ts#7ad4e09016898d9c4837e250121fef2aedbecaaa",
-    "tfs": "file:node_modules/vss-web-extension-sdk/typings/tfs.d.ts",
-    "vss": "file:node_modules/vss-web-extension-sdk/typings/vss.d.ts"
+    "tfs": "npm:vss-web-extension-sdk/typings/tfs.d.ts",
+    "vss": "npm:vss-web-extension-sdk/typings/vss.d.ts"
   }
 }

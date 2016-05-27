@@ -2,7 +2,6 @@ import Q = require("q");
 import VSS_Service = require("VSS/Service");
 import * as Utils_Core from "VSS/Utils/Core";
 import {Control} from "VSS/Controls";
-import {StatusIndicator} from "VSS/Controls/StatusIndicator";
 import * as Grids from "VSS/Controls/Grids";
 import * as WitClient from "TFS/WorkItemTracking/RestClient";
 import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";

@@ -2,8 +2,6 @@ import Q = require("q");
 import VSS_Service = require("VSS/Service");
 import * as Utils_Core from "VSS/Utils/Core";
 import {Control} from "VSS/Controls";
-import {StatusIndicator} from "VSS/Controls/StatusIndicator";
-import {CollapsiblePanel} from "VSS/Controls/Panels";
 import * as WitClient from "TFS/WorkItemTracking/RestClient";
 import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";
 import {WorkItemFormNavigationService} from "TFS/WorkItemTracking/Services";
@@ -35,12 +33,7 @@ export class RecentlyViewedList extends Control<IRecentlyViewedListOptions> {
     *
     */
     public render(workItemId: number, visits: WorkItemVisit[]): void {
-        
-        // If we already rendered this work item no-op
-        if(workItemId === this._currentWorkItemId) {
-            return;
-        }
-        
+                
         this._currentWorkItemId = workItemId;
         this._visitsContainer.empty();
 

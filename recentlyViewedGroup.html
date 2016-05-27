@@ -14,16 +14,14 @@
         VSS.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
-            configureModuleLoader: true
+            usePlatformStyles: true
         });
         
         // Load main entry point for extension
         VSS.require(["scripts/RecentlyViewed"], function (RecentlyViewed) {
             // Loading succeeded
             var recentlyViewedGroupView = new RecentlyViewed.RecentlyViewedGroupView();
-            recentlyViewedGroupView.initialize();
-            
-            VSS.notifyLoadSucceeded();    
+            recentlyViewedGroupView.initialize();  
         });
     </script>
 

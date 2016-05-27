@@ -32,13 +32,26 @@ var observerProvider = () => {
             
             if (args && !args.isNew) {
                 manager.fireOnLoadCallback(args.id);
-                Utils_Core.delay(this, 3000, _visitDelegate, [args.id])
+                Utils_Core.delay(this, 3000, _visitDelegate, [args.id]);
             } else {
                 manager.fireOnLoadCallback(null);
             }
         },
         
-        
+        onSaved: (args: WitExtensionContracts.IWorkItemChangedArgs) => {
+            if (args && args.id > 0) {
+                 _visitDelegate(args.id);
+                 manager.fireOnSavedCallback(args.id);
+            }
+            
+        },        
+        onRefreshed: (args: WitExtensionContracts.IWorkItemChangedArgs) => {
+            if (args && args.id > 0) {
+                 _visitDelegate(args.id);
+                 manager.fireOnRefreshedCallback(args.id);
+            }
+            
+        }, 
         onUnloaded: (args: WitExtensionContracts.IWorkItemChangedArgs) => {
             
             if (args) {
@@ -60,6 +73,8 @@ class VisitManager {
     }
 
     private workItemLoadedCallback = null;
+    private workItemSavedCallback = null;
+    private workItemRefreshedCallback = null;
     private workItemUnloadedCallback = null;
     
     public registerOnLoadCallback(callback: ((number) => void)){
@@ -70,6 +85,16 @@ class VisitManager {
         this.workItemUnloadedCallback = callback;
     }
     
+    public registerOnSavedCallback(callback: ((number) => void)){
+        this.workItemSavedCallback = callback;
+    }
+    
+    
+    public registerOnRefreshedCallback(callback: ((number) => void)){
+        this.workItemRefreshedCallback = callback;
+    }
+    
+    
     public fireOnLoadCallback(id: number){
         if(this.workItemLoadedCallback){
             this.workItemLoadedCallback(id);
@@ -78,9 +103,21 @@ class VisitManager {
     
     public fireOnUnloadCallback(id: number){
         if(this.workItemUnloadedCallback){
-            this.workItemLoadedCallback(id);
+            this.workItemUnloadedCallback(id);
         }
     }
+    
+    public fireOnSavedCallback(id: number){
+        if(this.workItemSavedCallback){
+            this.workItemSavedCallback(id);
+        }
+    } 
+    
+    public fireOnRefreshedCallback(id: number){
+        if(this.workItemRefreshedCallback){
+            this.workItemRefreshedCallback(id);
+        }
+    } 
 
     public recordVisit(workItemId: number): IPromise<Models.WorkItemVisitsDocument> {
         console.log(`Recording visit for work item ${workItemId}`);
@@ -158,16 +195,35 @@ class VisitManager {
     }
 
     private _updateVisitDocument(document: Models.WorkItemVisitsDocument): IPromise<Models.WorkItemVisitsDocument> {
-        var visitDate = new Date();
-        var visit = new Models.WorkItemVisit();
+        let visitDate = new Date();
+        let visit = new Models.WorkItemVisit();
 
         // toJSON correctly formats a date string for json serialization/deserialization
         visit.date = visitDate.toJSON();
         visit.workItemId = document.workItemId;
         visit.user = VSS.getWebContext().user;
-           
+        
+        // Loop over visits and see if the current user has visited less than MinTimeBetweenVisitsInSeconds
+        // If so we ignore this visit
+        let visitMoment = moment(visit.date);
+        for(let i = document.visits.length -1; i >= 0; --i) {
+            var pastVisit = document.visits[i];
+            var previousMoment = moment(pastVisit.date);
+            
+            var enoughTimeHasPassed = visitMoment.diff(previousMoment, 'seconds') > Models.Constants.MinTimeBetweenVisitsInSeconds;
+            if(enoughTimeHasPassed) {
+                // If we found any item that is old enough we are ok since 
+                // we recorded the visits in order
+                break;
+            }
+            else if(Utils_String.ignoreCaseComparer(pastVisit.user.id, visit.user.id) === 0) {
+                // If enough time has not passed since you last visit ignore this one
+                return Q(document);
+            }
+        }
+        
         if(document.visits.length > Models.Constants.MaxVisitsToStore){
-            var deltaCount = document.visits.length - Models.Constants.MaxVisitsToStore;
+            let deltaCount = document.visits.length - Models.Constants.MaxVisitsToStore;
             document.visits = document.visits.splice(deltaCount);
         }
         

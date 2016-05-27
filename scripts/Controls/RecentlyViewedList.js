@@ -19,9 +19,6 @@ define(["require", "exports", "VSS/Controls", "scripts/Models"], function (requi
         };
         RecentlyViewedList.prototype.render = function (workItemId, visits) {
             var _this = this;
-            if (workItemId === this._currentWorkItemId) {
-                return;
-            }
             this._currentWorkItemId = workItemId;
             this._visitsContainer.empty();
             if (visits && visits.length > 0) {

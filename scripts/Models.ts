@@ -20,7 +20,7 @@ export class WorkItemVisitsDocument {
     public id: string;
     
     /**
-     * The work item visits s
+     * The work item visits
      */
     public visits: WorkItemVisit[];
     
@@ -45,6 +45,8 @@ export class Constants {
     public static DocumentCollectionName = "WorkItemVisitCollection";
     
     public static RecordRetryAttempts = 3;
+    
+    public static MinTimeBetweenVisitsInSeconds =  60 * 10;
 }
 
 
