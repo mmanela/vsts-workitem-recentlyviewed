@@ -34,40 +34,20 @@
                 }]
             }
         },
+        typings: {
+          install: {}
+        },
         clean: ["scripts/**/*.js", "*.vsix"]
     });
-    
-
-
-    // TEMPORARY: This is only hear until the grunt-typings project is update for the latest version (https://github.com/typings/grunt-typings)
-    grunt.registerTask('typings', 'A Grunt plugin for typings', function() {
-        var options = this.options({
-          cwd: process.cwd()
-        });
-
-        var typings = require('typings-core');
-
-        var done = this.async();
-
-        var promise = typings.install(options);
-        promise.then(function (tree) {
-          done(true);
-        }, function (err) {
-          grunt.log.fail('error!');
-          grunt.log.fail(err.stack);
-          done(false);
-        });
-    });
-
-
 
     grunt.loadTasks("typings");
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-typings');
 
-    grunt.registerTask("build", ["typings", "ts:build", "copy:scripts"]);
+    grunt.registerTask("build", ["typings:install", "ts:build", "copy:scripts"]);
     grunt.registerTask("package", ["build", "exec:package"]);
     grunt.registerTask("publish", ["default", "exec:publish"]);        
     

@@ -6,6 +6,7 @@
     "grunt-contrib-copy": "~0.8.2",
     "grunt-exec": "~0.4.6",
     "grunt-ts": "^5.3.2",
+    "grunt-typings": "^0.1.5",
     "moment": "*",
     "tfx-cli": "^0.3.13",
     "typings-core": "^1.0.1",
