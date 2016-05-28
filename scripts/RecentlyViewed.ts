@@ -109,7 +109,7 @@ export class RecentlyViewedGroupView  {
     private _renderFullViewButton() {
         
         let $emptyGroupText = $("<div class='rv-empty'>No one else has viewed this yet.</div>")
-        let $fullViewLink = $("<div class='rv-fullViewLink' />").append("<button class='btn btn-secondary'>Full View</button>");
+        let $fullViewLink = $("<div class='rv-fullViewLink' />").append("<button class='btn btn-secondary'>View All</button>");
         $fullViewLink.click(() => {
             this._showDialog();
         })
