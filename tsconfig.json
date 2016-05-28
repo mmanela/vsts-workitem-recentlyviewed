@@ -3,7 +3,7 @@
         "module": "amd",
         "sourceMap": false,
         "rootDir": "./scripts",
-        "outDir": "./dist"
+        "outDir": "./dist/scripts"
     },
    "exclude": [
        "node_modules"

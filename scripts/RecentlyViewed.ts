@@ -29,7 +29,6 @@ export class RecentlyViewedFullView  {
 }
 
 
-
 export class RecentlyViewedGroupView  {
     private _statusIndicator: StatusIndicator;
     private _renderedWorkItem: number;

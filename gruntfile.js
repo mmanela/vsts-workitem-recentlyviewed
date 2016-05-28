@@ -12,12 +12,12 @@
         },
         exec: {
             package: {
-                command: "tfx extension create --manifest-globs vss-extension.json",
+                command: "tfx extension create --root dist --manifest-globs vss-extension.json",
                 stdout: true,
                 stderr: true
             },
             publish: {
-                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --manifest-globs vss-extension.json",
+                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --root dist --manifest-globs vss-extension.json",
                 stdout: true,
                 stderr: true
             }
@@ -27,10 +27,18 @@
                 files: [{
                     expand: true, 
                     flatten: true, 
-                    src: ["node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js"], 
-                    dest: "dist",
+                    src: ["node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", "node_modules/moment/min/moment.min.js"], 
+                    dest: "dist/scripts",
                     filter: "isFile" 
-                }]
+                },
+                {
+                    expand: true, 
+                    flatten: false, 
+                    src: ["styles/**", "img/**", "*.html", "vss-extension.json", "details.md"], 
+                    dest: "dist"
+                },
+                
+                ]
             }
         },
         
