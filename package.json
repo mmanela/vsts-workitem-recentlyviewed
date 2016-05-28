@@ -9,10 +9,14 @@
     "grunt-typings": "^0.1.5",
     "moment": "*",
     "tfx-cli": "^0.3.13",
+    "typings": "^1.0.4",
     "vss-web-extension-sdk": "^1.95.2"
   },
   "name": "vsts-workitem-recentlyviewed",
   "private": true,
   "version": "0.0.0",
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "postinstall": "typings install"
+  }
 }

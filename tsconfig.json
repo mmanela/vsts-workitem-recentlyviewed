@@ -3,7 +3,11 @@
         "module": "amd",
         "sourceMap": false
     },
-    "exclude": [
-        "node_modules"
+    "filesGlob": [
+        "src/**/*.ts",
+        "typings/index.d.ts"
+    ],
+    "files": [
+        "typings/index.d.ts"
     ]
 }

@@ -1,10 +1,9 @@
 ﻿module.exports = function (grunt) {   
-   
-
     grunt.initConfig({
         ts: {
             build: {
-                src: ["scripts/**/*.ts"],
+                src: ["scripts/**/*.ts", "typings/browser.d.ts"],
+                outDir: "dist",
                 tsconfig: true
             },
             options: {
@@ -28,26 +27,22 @@
                 files: [{
                     expand: true, 
                     flatten: true, 
-                    src: ["node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", "node_modules/moment/min/moment.min.js"], 
-                    dest: "scripts",
+                    src: ["node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js"], 
+                    dest: "dist",
                     filter: "isFile" 
                 }]
             }
         },
-        typings: {
-          install: {}
-        },
-        clean: ["scripts/**/*.js", "*.vsix"]
+        
+        clean: ["scripts/**/*.js", "*.vsix", "dist"]
     });
 
-    grunt.loadTasks("typings");
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-typings');
 
-    grunt.registerTask("build", ["typings:install", "ts:build", "copy:scripts"]);
+    grunt.registerTask("build", ["ts:build", "copy:scripts"]);
     grunt.registerTask("package", ["build", "exec:package"]);
     grunt.registerTask("publish", ["default", "exec:publish"]);        
     
