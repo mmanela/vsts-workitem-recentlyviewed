@@ -32,7 +32,7 @@ var observerProvider = () => {
             
             if (args && !args.isNew) {
                 manager.fireOnLoadCallback(args.id);
-                Utils_Core.delay(this, 5000, _visitDelegate, [args.id]);
+                Utils_Core.delay(this, Models.Constants.MinTimeOnWorkItemInSeconds, _visitDelegate, [args.id]);
             } else {
                 manager.fireOnLoadCallback(null);
             }

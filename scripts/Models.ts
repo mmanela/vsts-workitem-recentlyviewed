@@ -47,6 +47,8 @@ export class Constants {
     public static RecordRetryAttempts = 3;
     
     public static MinTimeBetweenVisitsInSeconds =  60 * 10;
+    
+    public static MinTimeOnWorkItemInSeconds = 10;
 }
 
 

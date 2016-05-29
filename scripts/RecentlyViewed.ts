@@ -124,7 +124,7 @@ export class RecentlyViewedGroupView  {
             var extInfo = VSS.getExtensionContext();
 
             var dialogOptions: IHostDialogOptions = {
-                title: "Who viewed this work item?",
+                title: "Who's viewed this work item?",
                 width: 800,
                 height: 600,
                 buttons: null
