@@ -34,7 +34,7 @@
                 {
                     expand: true, 
                     flatten: false, 
-                    src: ["styles/**", "img/**", "*.html", "vss-extension.json", "details.md"], 
+                    src: ["styles/**", "img/**", "*.html", "vss-extension.json", "readme.md"], 
                     dest: "dist"
                 },
                 

@@ -22,7 +22,7 @@
     ],
     "content": {
         "details": {
-            "path": "details.md"
+            "path": "readme.md"
         }
     },
     "links": {
@@ -72,7 +72,7 @@
         }
     ],
     "categories": [
-        "Integrate"
+        "Plan and track"
     ],
     "contributions": [
         {  
