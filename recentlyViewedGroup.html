@@ -21,7 +21,8 @@
         VSS.require(["scripts/RecentlyViewed"], function (RecentlyViewed) {
             // Loading succeeded
             var recentlyViewedGroupView = new RecentlyViewed.RecentlyViewedGroupView();
-            recentlyViewedGroupView.initialize();  
+            recentlyViewedGroupView.initialize();
+            VSS.notifyLoadSucceeded(); 
         });
     </script>
 

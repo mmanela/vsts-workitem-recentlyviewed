@@ -31,16 +31,14 @@ export class RecentlyViewedFullView  {
 
 export class RecentlyViewedGroupView  {
     private _statusIndicator: StatusIndicator;
-    private _renderedWorkItem: number;
     
     public initialize() {
         
-        let isFirstLoad = true;
         this._statusIndicator = <StatusIndicator>Control.createIn<IStatusIndicatorOptions>(StatusIndicator,
                  $(".rv-group"),
                 { center: true,  imageClass: "big-status-progress", message: "Loading..." });
                 
-        this._statusIndicator.hideElement();
+        this._statusIndicator.start();
                 
         
         var rvList = <RecentlyViewedList>Control.createIn<IRecentlyViewedListOptions>(
@@ -48,34 +46,19 @@ export class RecentlyViewedGroupView  {
             $(".rv-group"), 
             { maxCount: Constants.GroupViewVisitCount });
         
+        this._renderFullViewButton();
+        
         var render = (workItemId) => {
             
-            // If we already rendered this bail out
-            if(workItemId === this._renderedWorkItem) {
-                return;
-            }
-            
-            this._renderedWorkItem = workItemId;
-            
-            if(!isFirstLoad) {
-                this._statusIndicator.start();
-                $(".rv-group .rv-container").empty();
-            }
-            
+            this._statusIndicator.start();
+            $(".rv-group .rv-container").empty();
             $(".rv-fullViewLink").hide();
+            
             VisitManager.manager.getWorkItemVisits(workItemId).then((visits) => {
                 
-                if (isFirstLoad) {
-                    VSS.notifyLoadSucceeded(); 
-                    isFirstLoad = false;
-                    rvList.render(workItemId, visits);     
-                    this._renderFullViewButton();
-                }
-                else {
-                    this._statusIndicator.complete();
-                    rvList.render(workItemId, visits);
-                }
-                
+                rvList.render(workItemId, visits);  
+                this._statusIndicator.complete();  
+            
                 if(visits.length > 0) {
                     $(".rv-empty").hide();
                     $(".rv-fullViewLink").show();
@@ -87,20 +70,12 @@ export class RecentlyViewedGroupView  {
             });
         };
 
-        WorkItemFormService.getService().then((workItemFormService:any) => {
-           workItemFormService.getId().then((workItemId) => {
-               render(workItemId);
-           });
-        });
-        
         VisitManager.manager.registerOnLoadCallback(render);
         VisitManager.manager.registerOnRefreshedCallback((workItemId) => {
-            this._renderedWorkItem = null; // Clear this before we re-render
             render(workItemId);
         });
         
         VisitManager.manager.registerOnSavedCallback((workItemId) => {
-            this._renderedWorkItem = null; // Clear this before we re-render
             render(workItemId);
         });
         
@@ -115,8 +90,12 @@ export class RecentlyViewedGroupView  {
             this._showDialog();
         })
         
+        $fullViewLink.hide();
+        $emptyGroupText.hide();
+        
         $fullViewLink.appendTo($(".rv-group"));
         $emptyGroupText.appendTo($(".rv-group"));
+        
     }
 
     

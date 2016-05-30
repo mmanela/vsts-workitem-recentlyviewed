@@ -30,6 +30,7 @@ body {
 .rv-group .rv-visit .visited-name {
     padding-left: 10px;
     font-size: 15px;
+    white-space: nowrap;
 }
 
 .rv-group .rv-visit .visited-date {
