@@ -1,7 +1,23 @@
+export class Visitor {
+    
+    constructor(user: UserContext){
+        this.name = user.name;
+        this.uniqueName = user.uniqueName;
+        
+        if(user.uniqueName != user.email) {
+            this.email = user.email;
+        }
+    }
+    
+    public email: string;
+    public uniqueName: string;
+    public name: string;
+}
+
 export class WorkItemVisit {
     public workItemId: number;
     public date: string;
-    public user: UserContext;
+    public user: Visitor;
 }
 
 export class WorkItemVisitsDocument {
@@ -44,7 +60,7 @@ export class Constants {
     /**
      * The max number of visits we store. One reached we will drop the oldest one when new visits come
      */
-    public static MaxVisitsToStore = 200;
+    public static MaxVisitsToStore = 500;
     
     /**
      * How many attempts to save the visit. This is needed in the case of concurrency.

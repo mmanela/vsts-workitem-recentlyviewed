@@ -16,7 +16,7 @@ Clicking on the __View All__ button takes you to a full view showing every perso
 
 ![ViewAll](img/ViewAllExample.png)
 
-The number of visits kept for each work item is capped at the 200 most recent. 
+The number of visits kept for each work item is capped at the 500 most recent. 
 
 
 ### How it works?

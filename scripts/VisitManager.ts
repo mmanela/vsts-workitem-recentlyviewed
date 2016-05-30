@@ -201,7 +201,7 @@ class VisitManager {
         // toJSON correctly formats a date string for json serialization/deserialization
         visit.date = visitDate.toJSON();
         visit.workItemId = document.workItemId;
-        visit.user = VSS.getWebContext().user;
+        visit.user = new Models.Visitor(VSS.getWebContext().user);
         
         // Loop over visits and see if the current user has visited less than MinTimeBetweenVisitsInSeconds
         // If so we ignore this visit
@@ -216,7 +216,7 @@ class VisitManager {
                 // we recorded the visits in order
                 break;
             }
-            else if(Utils_String.ignoreCaseComparer(pastVisit.user.id, visit.user.id) === 0) {
+            else if(Utils_String.ignoreCaseComparer(pastVisit.user.uniqueName, visit.user.uniqueName) === 0) {
                 // If enough time has not passed since you last visit ignore this one
                 return Q(document);
             }

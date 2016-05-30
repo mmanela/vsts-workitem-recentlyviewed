@@ -6,7 +6,7 @@ import * as Grids from "VSS/Controls/Grids";
 import * as WitClient from "TFS/WorkItemTracking/RestClient";
 import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";
 import {WorkItemFormNavigationService} from "TFS/WorkItemTracking/Services";
-import { WorkItemVisit, Constants} from "scripts/Models";
+import { WorkItemVisit, Constants, Visitor} from "scripts/Models";
 import {manager} from "scripts/VisitManager"
 
 
@@ -69,7 +69,7 @@ export class RecentlyViewedGrid extends Control<any> {
     }
     
     
-    private _getImageUrl(user:UserContext){
+    private _getImageUrl(user: Visitor){
         var identityImageUrl = `${VSS.getWebContext().host.uri}/_api/_common/IdentityImage?id=`;
         identityImageUrl = `${identityImageUrl}&identifier=${user.uniqueName}&identifierType=0`;
         return identityImageUrl;
