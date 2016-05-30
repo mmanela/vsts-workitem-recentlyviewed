@@ -38,7 +38,9 @@ export class RecentlyViewedGroupView  {
         let isFirstLoad = true;
         this._statusIndicator = <StatusIndicator>Control.createIn<IStatusIndicatorOptions>(StatusIndicator,
                  $(".rv-group"),
-                { center: true,  imageClass: "big-status-progress" });
+                { center: true,  imageClass: "big-status-progress", message: "Loading..." });
+                
+        this._statusIndicator.hideElement();
                 
         
         var rvList = <RecentlyViewedList>Control.createIn<IRecentlyViewedListOptions>(

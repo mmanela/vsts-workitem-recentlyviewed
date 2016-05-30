@@ -10,13 +10,13 @@ This extension adds a group to the work item form which shows the most recent di
 ![Group](img/GroupExample.png)
 
 
-Clicking on the __View All__ button takes you to a full view showing every person who visited the worki tem including multiple visits from the same person. 
+Clicking on the __View All__ button takes you to a full view showing every person who visited the work item including multiple visits from the same person. 
 
 
 
 ![ViewAll](img/ViewAllExample.png)
 
-The number of visits kept for each work item is capped at the 1000 most recent. 
+The number of visits kept for each work item is capped at the 200 most recent. 
 
 
 ### How it works?
