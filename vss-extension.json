@@ -6,7 +6,7 @@
     "scopes": [
         "vso.work"
     ],
-    "description": "This extension provides a work item group that shows who has recently viewed the current work item",
+    "description": "Tracks who visits a work item and displays the list on the work item form.",
     "publisher": "mmanela",
     "public": false,
     "icons": {
