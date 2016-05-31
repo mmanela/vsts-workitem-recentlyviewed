@@ -22,7 +22,8 @@ The number of visits kept for each work item is capped at the 500 most recent.
 ### How it works?
 
 This extensions works by recording each time a person visits a work item. After the form is opened the extension will
-wait and see if the person remains on the work item for at least 10 seconds. If so, it then checks to see if the person has visited the same work item less than 10 minutes ago. If not, it records the visit.
+wait and see if the person remains on the work item for at least 10 seconds. If so, it makes sure this person has not visited the same work item less than 10 minutes ago before recording the new visit. 
+This window is meant to help catch *new* visits.
 
 
 ### Feedback
