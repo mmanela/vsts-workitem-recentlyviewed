@@ -8,7 +8,7 @@
     ],
     "description": "Tracks who visits a work item and displays the list on the work item form.",
     "publisher": "mmanela",
-    "public": false,
+    "public": true,
     "icons": {
         "default": "img/logo.png"
     },

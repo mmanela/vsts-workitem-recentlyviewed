@@ -81,5 +81,5 @@ export class Constants {
 
 
 export function getStorageKey(workItemId: number){
-    return `TEMP1-${Constants.StorageKey}-${workItemId}`;
+    return `${Constants.StorageKey}-${workItemId}`;
 }
