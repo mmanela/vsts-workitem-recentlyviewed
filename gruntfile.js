@@ -46,9 +46,7 @@
                     flatten: false, 
                     src: ["styles/**", "img/**", "*.html", "vss-extension.json", "readme.md"], 
                     dest: "dist"
-                },
-                
-                ]
+                }]
             }
         },
         
