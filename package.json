@@ -9,9 +9,7 @@
     "grunt-ts": "^5.5.1",
     "tfx-cli": "^0.3.13",
     "typescript": "^1.8.10",
-    "typings": "^1.0.4"
-  },
-  "dependencies": {
+    "typings": "^1.0.4",
     "vss-web-extension-sdk": "^1.100.0"
   },
   "name": "vsts-workitem-recentlyviewed",
