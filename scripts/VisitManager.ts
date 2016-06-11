@@ -13,8 +13,7 @@ var observerProvider = () => {
         (visitedId) => {
             if (visitedId > 0) {
                 WorkItemFormService.getService().then(
-                    // casting to any for now since the typescript doesn't treat the calls as promises
-                    (workItemFormService: any) => {
+                    (workItemFormService) => {
                         workItemFormService.getId().then((currentId: number) => {
                             // Only log the visit if we're still on this work item.  If they
                             // didn't look for too long, it shouldn't be considered as a visit.
