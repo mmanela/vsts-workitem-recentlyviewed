@@ -10,6 +10,9 @@
                 fast: 'never'
             }
         },
+        typings: {
+            install: {}
+        },
         exec: {
             package_dev: {
                 command: "tfx extension create --root dist --manifest-globs vss-extension.json --overrides-file configs/dev.json",
@@ -57,7 +60,9 @@
     grunt.loadNpmTasks("grunt-exec");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks("grunt-typings");
 
+    grunt.registerTask("install", ["typings:install"]);
     grunt.registerTask("build", ["ts:build", "copy:scripts"]);
     grunt.registerTask("package-dev", ["build", "exec:package_dev"]);
     grunt.registerTask("package-release", ["build", "exec:package_release"]);
