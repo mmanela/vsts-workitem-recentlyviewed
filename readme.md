@@ -1,6 +1,6 @@
 ## Who Viewed this Work Item? - VSTS Work Item Form Extension ##
 
-An extension for the [Team Services](https://www.visualstudio.com/en-us/products/visual-studio-team-services-vs.aspx) work item form that tracks who viewed each work item.
+An [extension](https://marketplace.visualstudio.com/items?itemName=mmanela.vsts-workitem-recentlyviewed) for the [Team Services](https://www.visualstudio.com/en-us/products/visual-studio-team-services-vs.aspx) work item form that tracks who viewed each work item.
 
 
 ### Overview
