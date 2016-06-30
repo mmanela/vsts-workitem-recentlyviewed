@@ -59,7 +59,7 @@ export class RecentlyViewedGroupView  {
                 rvList.render(workItemId, visits);  
                 this._statusIndicator.complete();  
             
-                if(visits.length > 0) {
+                if(visits && visits.length > 0) {
                     $(".rv-empty").hide();
                     $(".rv-fullViewLink").show();
                 }

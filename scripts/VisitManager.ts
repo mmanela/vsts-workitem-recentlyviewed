@@ -119,7 +119,6 @@ class VisitManager {
     } 
 
     public recordVisit(workItemId: number): IPromise<Models.WorkItemVisitsDocument> {
-        console.log(`Recording visit for work item ${workItemId}`);
         return this._recordVisitWithRetries(workItemId, Models.Constants.RecordRetryAttempts);
     }
 
@@ -153,17 +152,23 @@ class VisitManager {
     public getWorkItemVisits(workItemId: number): IPromise<Models.WorkItemVisit[]> {
         var defer = Q.defer<Models.WorkItemVisit[]>();
         
-        var workItemVisits: Models.WorkItemVisit[] = [];
-        this._getVisitsDocument(workItemId).then((document) => {
-            if (document && document.workItemId === workItemId && document.visits) {
-                defer.resolve(document.visits);
-            }
-            else {
-                defer.resolve(workItemVisits);
-            }
-        }, (reason) => {
-             defer.resolve(workItemVisits);
-        });
+        if(workItemId === null) {
+            defer.resolve([]);
+        }
+        else {
+
+            var workItemVisits: Models.WorkItemVisit[] = [];
+            this._getVisitsDocument(workItemId).then((document) => {
+                if (document && document.workItemId === workItemId && document.visits) {
+                    defer.resolve(document.visits);
+                }
+                else {
+                    defer.resolve(workItemVisits);
+                }
+            }, (reason) => {
+                 defer.resolve(workItemVisits);
+            });
+        }
 
         return defer.promise;
     }
