@@ -67,6 +67,9 @@ export class RecentlyViewedGroupView  {
                     $(".rv-fullViewLink").hide();
                     $(".rv-empty").show();
                 }
+
+                // Adjust size to fit
+                VSS.resize();
             });
         };
 
@@ -115,7 +118,7 @@ export class RecentlyViewedGroupView  {
             };
 
             dialogService.openDialog(
-                `${Constants.ExtensionPublisher}.${Constants.ExtensionName}.recently-viewed-dialog`,
+                `${extInfo.publisherId}.${extInfo.extensionId}.recently-viewed-dialog`,
                 dialogOptions,
                 contributionConfig);
         });

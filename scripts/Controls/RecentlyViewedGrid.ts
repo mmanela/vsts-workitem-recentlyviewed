@@ -59,8 +59,7 @@ export class RecentlyViewedGrid extends Control<any> {
           let options:Grids.IGridOptions = {
             source: gridSource,
             columns: this._getGridColumns(gridSource),
-            height: "100%",
-            useBowtieStyle: true
+            height: "100%"
           };
           
           Grids.Grid.createIn<Grids.IGridOptions>(Grids.Grid, this._visitsContainer, options);

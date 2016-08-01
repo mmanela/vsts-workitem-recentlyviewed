@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "vsts-workitem-recentlyviewed",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Who recently viewed a work item?",
     "scopes": [
         "vso.work"
@@ -84,7 +84,7 @@
             "properties": {
                 "name": "Who's viewed this?",
                 "uri": "recentlyViewedGroup.html",
-                "height": 250
+                "height": 75
             }
         },
         {
