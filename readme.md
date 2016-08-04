@@ -5,7 +5,7 @@ An [extension](https://marketplace.visualstudio.com/items?itemName=mmanela.vsts-
 
 ### Overview
 
-This extension adds a group to the work item form which shows the most recent distinct people who view the work item. 
+This extension adds a group to the work item form (in VSTS and TFS "15") which shows the most recent distinct people who view the work item. 
 
 ![Group](img/GroupExample.png)
 
