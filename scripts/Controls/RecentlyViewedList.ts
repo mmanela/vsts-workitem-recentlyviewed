@@ -5,8 +5,8 @@ import {Control} from "VSS/Controls";
 import * as WitClient from "TFS/WorkItemTracking/RestClient";
 import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";
 import {WorkItemFormNavigationService} from "TFS/WorkItemTracking/Services";
-import { WorkItemVisit, Constants} from "scripts/Models";
-import {manager} from "scripts/VisitManager"
+import { WorkItemVisit, Constants} from "../Models";
+import {manager} from "../VisitManager"
 
 
 export interface IRecentlyViewedListOptions {

@@ -2,9 +2,8 @@
     grunt.initConfig({
         ts: {
             build: {
-                src: ["scripts/**/*.ts", "typings/browser.d.ts"],
-                outDir: "dist",
-                tsconfig: true
+                tsconfig: true,
+                "outDir": "./build"
             },
             options: {
                 fast: 'never'
@@ -15,22 +14,22 @@
         },
         exec: {
             package_dev: {
-                command: "tfx extension create --root dist --manifest-globs vss-extension.json --overrides-file configs/dev.json",
+                command: "tfx extension create --rev-version --manifests vss-extension.json --overrides-file configs/dev.json",
                 stdout: true,
                 stderr: true
             },
             package_release: {
-                command: "tfx extension create --root dist --manifest-globs vss-extension.json --overrides-file configs/release.json",
+                command: "tfx extension create --rev-version --manifests vss-extension.json --overrides-file configs/release.json",
                 stdout: true,
                 stderr: true
             },
             publish_dev: {
-                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --root dist --manifest-globs vss-extension.json --overrides-file configs/dev.json",
+                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --rev-version --manifests vss-extension.json --overrides-file configs/dev.json",
                 stdout: true,
                 stderr: true
             },
             publish_release: {
-                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --root dist --manifest-globs vss-extension.json --overrides-file configs/release.json",
+                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --rev-version --manifests vss-extension.json --overrides-file configs/release.json",
                 stdout: true,
                 stderr: true
             }
@@ -41,19 +40,13 @@
                     expand: true, 
                     flatten: true, 
                     src: ["node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js", "node_modules/moment/min/moment.min.js"], 
-                    dest: "dist/scripts",
+                    dest: "build",
                     filter: "isFile" 
-                },
-                {
-                    expand: true, 
-                    flatten: false, 
-                    src: ["styles/**", "img/**", "*.html", "vss-extension.json", "readme.md"], 
-                    dest: "dist"
                 }]
             }
         },
         
-        clean: ["scripts/**/*.js", "*.vsix", "dist"]
+        clean: ["scripts/**/*.js", "*.vsix", "build"]
     });
 
     grunt.loadNpmTasks("grunt-ts");

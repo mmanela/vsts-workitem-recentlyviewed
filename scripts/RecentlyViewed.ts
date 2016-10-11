@@ -1,8 +1,8 @@
 ﻿import {Control} from "VSS/Controls";
-import {RecentlyViewedList, IRecentlyViewedListOptions} from "scripts/Controls/RecentlyViewedList";
-import {RecentlyViewedGrid} from "scripts/Controls/RecentlyViewedGrid";
-import {WorkItemVisit, Constants} from "scripts/Models";
-import * as VisitManager from "scripts/VisitManager";
+import {RecentlyViewedList, IRecentlyViewedListOptions} from "./Controls/RecentlyViewedList";
+import {RecentlyViewedGrid} from "./Controls/RecentlyViewedGrid";
+import {WorkItemVisit, Constants} from "./Models";
+import * as VisitManager from "./VisitManager";
 import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
 import {StatusIndicator, IStatusIndicatorOptions} from "VSS/Controls/StatusIndicator";
 

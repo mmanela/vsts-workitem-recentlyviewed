@@ -2,8 +2,7 @@
     "compilerOptions": {
         "module": "amd",
         "sourceMap": false,
-        "rootDir": "./scripts",
-        "outDir": "./dist/scripts"
+        "rootDir": "./scripts"
     },
    "exclude": [
        "node_modules"

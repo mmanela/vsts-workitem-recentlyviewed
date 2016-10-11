@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <script src="scripts/VSS.SDK.min.js"></script>
-    <script src="scripts/moment.min.js"></script>
+    <script src="build/VSS.SDK.min.js"></script>
+    <script src="build/moment.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/RecentlyViewed.css">
 </head>
 
@@ -18,7 +18,7 @@
         });
         
         // Load main entry point for extension
-        VSS.require(["scripts/RecentlyViewed"], function (RecentlyViewed) {
+        VSS.require(["build/RecentlyViewed"], function (RecentlyViewed) {
             // Loading succeeded
             var recentlyViewedGroupView = new RecentlyViewed.RecentlyViewedGroupView();
             recentlyViewedGroupView.initialize();

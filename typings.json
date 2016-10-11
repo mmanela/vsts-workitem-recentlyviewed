@@ -1,9 +1,10 @@
 {
   "name": "vsts-workitem-recentlyviewed",
   "globalDependencies": {
-    "jquery": "registry:dt/jquery#1.10.0+20160316155526",
-    "knockout": "registry:dt/knockout#0.0.0+20160409112158",
-    "q": "registry:dt/q#0.0.0+20160323171452",
+    "jquery": "registry:dt/jquery#1.10.0+20160628074423",
+    "knockout": "registry:dt/knockout#0.0.0+20160512130947",
+    "q": "registry:dt/q#0.0.0+20160613154756",
+    "require": "registry:dt/require#2.1.20+20160316155526",
     "tfs": "npm:vss-web-extension-sdk/typings/tfs.d.ts",
     "vss": "npm:vss-web-extension-sdk/typings/vss.d.ts",
     "moment": "github:DefinitelyTyped/DefinitelyTyped/moment/moment.d.ts#7ad4e09016898d9c4837e250121fef2aedbecaaa",

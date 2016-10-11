@@ -5,7 +5,7 @@ import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Se
 import * as WitClient from "TFS/WorkItemTracking/RestClient"
 import * as WitContracts  from "TFS/WorkItemTracking/Contracts";
 import * as WitExtensionContracts  from "TFS/WorkItemTracking/ExtensionContracts";
-import * as Models from "scripts/Models";
+import * as Models from "./Models";
 
 var observerProvider = () => {
 
