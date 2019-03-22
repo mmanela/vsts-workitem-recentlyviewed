@@ -1,12 +1,6 @@
-import Q = require("q");
-import VSS_Service = require("VSS/Service");
-import * as Utils_Core from "VSS/Utils/Core";
 import {Control} from "VSS/Controls";
-import * as WitClient from "TFS/WorkItemTracking/RestClient";
-import {WorkItemUpdate} from "TFS/WorkItemTracking/Contracts";
-import {WorkItemFormNavigationService} from "TFS/WorkItemTracking/Services";
 import { WorkItemVisit, Constants} from "../Models";
-import {manager} from "../VisitManager"
+import * as moment from "moment";
 
 
 export interface IRecentlyViewedListOptions {

@@ -1,22 +1,18 @@
 {
   "devDependencies": {
-    "moment": "*",
+    "@types/jquery": "^2.0.41",
     "grunt": "~1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "~1.0.0",
     "grunt-exec": "~0.4.7",
     "grunt-ts": "^5.5.1",
-    "tfx-cli": "^0.3.26",
-    "typescript": "^1.8.10",
-    "grunt-typings": "^0.1.5",
-    "typings": "^1.0.4",
-    "vss-web-extension-sdk": "^1.104.0"
+    "moment": "*",
+    "tfx-cli": "^0.6.4",
+    "typescript": "^3.0.1",
+    "vss-web-extension-sdk": "^5.141.0"
   },
   "name": "vsts-workitem-recentlyviewed",
   "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "postinstall": "grunt install"
-  }
+  "version": "0.0.0"
 }

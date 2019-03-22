@@ -1,9 +1,9 @@
 ﻿import {Control} from "VSS/Controls";
 import {RecentlyViewedList, IRecentlyViewedListOptions} from "./Controls/RecentlyViewedList";
 import {RecentlyViewedGrid} from "./Controls/RecentlyViewedGrid";
-import {WorkItemVisit, Constants} from "./Models";
+import {Constants} from "./Models";
 import * as VisitManager from "./VisitManager";
-import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
+import {WorkItemFormService} from "TFS/WorkItemTracking/Services";
 import {StatusIndicator, IStatusIndicatorOptions} from "VSS/Controls/StatusIndicator";
 
 export class RecentlyViewedFullView  {
@@ -111,7 +111,7 @@ export class RecentlyViewedGroupView  {
                 title: "Who's viewed this work item?",
                 width: 800,
                 height: 600,
-                buttons: null
+                buttons: null!
             };
 
             var contributionConfig = {

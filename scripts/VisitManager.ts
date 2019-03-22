@@ -1,11 +1,9 @@
-﻿import Q = require("q");
-import * as Utils_Core from "VSS/Utils/Core";
+﻿import * as Utils_Core from "VSS/Utils/Core";
 import * as Utils_String from "VSS/Utils/String";
-import {IWorkItemFormService, WorkItemFormService} from "TFS/WorkItemTracking/Services";
-import * as WitClient from "TFS/WorkItemTracking/RestClient"
-import * as WitContracts  from "TFS/WorkItemTracking/Contracts";
+import {WorkItemFormService} from "TFS/WorkItemTracking/Services";
 import * as WitExtensionContracts  from "TFS/WorkItemTracking/ExtensionContracts";
 import * as Models from "./Models";
+import * as moment from "moment";
 
 var observerProvider = () => {
 
@@ -33,7 +31,7 @@ var observerProvider = () => {
                 manager.fireOnLoadCallback(args.id);
                 Utils_Core.delay(this, Models.Constants.MinTimeOnWorkItemInSeconds, _visitDelegate, [args.id]);
             } else {
-                manager.fireOnLoadCallback(null);
+                manager.fireOnLoadCallback(null!);
             }
         },
         
@@ -57,7 +55,7 @@ var observerProvider = () => {
                 manager.fireOnUnloadCallback(args.id);
             }
             else{
-                manager.fireOnUnloadCallback(null);
+                manager.fireOnUnloadCallback(null!);
             }
         },
         
@@ -71,48 +69,48 @@ class VisitManager {
     constructor() {
     }
 
-    private workItemLoadedCallback = null;
-    private workItemSavedCallback = null;
-    private workItemRefreshedCallback = null;
-    private workItemUnloadedCallback = null;
+    private workItemLoadedCallback: ((number?: number) => void);
+    private workItemSavedCallback: ((number?: number) => void);
+    private workItemRefreshedCallback: ((number?: number) => void);
+    private workItemUnloadedCallback: ((number?: number) => void);
     
-    public registerOnLoadCallback(callback: ((number) => void)){
+    public registerOnLoadCallback(callback: ((number?: number) => void)){
         this.workItemLoadedCallback = callback;
     }    
     
-    public registerOnUnloadCallback(callback: ((number) => void)){
+    public registerOnUnloadCallback(callback: ((number?: number) => void)){
         this.workItemUnloadedCallback = callback;
     }
     
-    public registerOnSavedCallback(callback: ((number) => void)){
+    public registerOnSavedCallback(callback: ((number?: number) => void)){
         this.workItemSavedCallback = callback;
     }
     
     
-    public registerOnRefreshedCallback(callback: ((number) => void)){
+    public registerOnRefreshedCallback(callback: ((number?: number) => void)){
         this.workItemRefreshedCallback = callback;
     }
     
     
-    public fireOnLoadCallback(id: number){
+    public fireOnLoadCallback(id?: number){
         if(this.workItemLoadedCallback){
             this.workItemLoadedCallback(id);
         }
     } 
     
-    public fireOnUnloadCallback(id: number){
+    public fireOnUnloadCallback(id?: number){
         if(this.workItemUnloadedCallback){
             this.workItemUnloadedCallback(id);
         }
     }
     
-    public fireOnSavedCallback(id: number){
+    public fireOnSavedCallback(id?: number){
         if(this.workItemSavedCallback){
             this.workItemSavedCallback(id);
         }
     } 
     
-    public fireOnRefreshedCallback(id: number){
+    public fireOnRefreshedCallback(id?: number){
         if(this.workItemRefreshedCallback){
             this.workItemRefreshedCallback(id);
         }
@@ -124,12 +122,12 @@ class VisitManager {
 
     private _recordVisitWithRetries(workItemId: number, attempt: number): IPromise<Models.WorkItemVisitsDocument> {
         if(attempt === 0) {
-            return Q.reject('Unable to record visit due to repeated concurrency issues');
+            return Promise.reject('Unable to record visit due to repeated concurrency issues');
         }
         
         let update = (doc:Models.WorkItemVisitsDocument) => {
            return this._updateVisitDocument(doc).then((updatedDoc) => {
-                return Q(updatedDoc);
+                return Promise.resolve(updatedDoc);
             }, (reason) => {
                 return this._recordVisitWithRetries(workItemId, --attempt);
             });
@@ -149,53 +147,54 @@ class VisitManager {
 
     }
 
-    public getWorkItemVisits(workItemId: number): IPromise<Models.WorkItemVisit[]> {
-        var defer = Q.defer<Models.WorkItemVisit[]>();
+    public getWorkItemVisits(workItemId: number): Promise<Models.WorkItemVisit[]> {
+        var promise = new Promise<Models.WorkItemVisit[]>((resolve, reject) => {
+            if(workItemId === null) {
+                resolve([]);
+            }
+            else {
+
+                var workItemVisits: Models.WorkItemVisit[] = [];
+                this._getVisitsDocument(workItemId).then((document) => {
+                    if (document && document.workItemId === workItemId && document.visits) {
+                        resolve(document.visits);
+                    }
+                    else {
+                        resolve(workItemVisits);
+                    }
+                }, (reason) => {
+                    resolve(workItemVisits);
+                });
+            }
+        });
+        return promise;
+    }
+
+    public deleteVisitsDocument(workItemId: number): Promise<void> {
+        var promise = new Promise<void>((resolve, reject) => {
+            VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
+                dataService.deleteDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(workItemId));
+                resolve();
+            });
+        });
+
+        return promise;
+    }
+
+    private _getVisitsDocument(id: number): Promise<Models.WorkItemVisitsDocument> {
         
-        if(workItemId === null) {
-            defer.resolve([]);
-        }
-        else {
-
-            var workItemVisits: Models.WorkItemVisit[] = [];
-            this._getVisitsDocument(workItemId).then((document) => {
-                if (document && document.workItemId === workItemId && document.visits) {
-                    defer.resolve(document.visits);
-                }
-                else {
-                    defer.resolve(workItemVisits);
-                }
-            }, (reason) => {
-                 defer.resolve(workItemVisits);
+        var promise = new Promise<Models.WorkItemVisitsDocument>((resolve, reject) => {
+            VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
+                dataService.getDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(id)).then((document) => {
+                    resolve(document);
+                }, (reason) => {
+                    reject(`Unable to get visits`);
+                });
             });
-        }
 
-        return defer.promise;
-    }
-
-    public deleteVisitsDocument(workItemId: number): IPromise<void> {
-        var defer = Q.defer<void>();
-
-        VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
-            dataService.deleteDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(workItemId));
-            defer.resolve(null);
         });
 
-        return defer.promise;
-    }
-
-    private _getVisitsDocument(id: number): IPromise<Models.WorkItemVisitsDocument> {
-        var defer = Q.defer();
-
-        VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
-            dataService.getDocument(Models.Constants.DocumentCollectionName, Models.getStorageKey(id)).then((document) => {
-                defer.resolve(document);
-            }, (reason) => {
-                defer.reject(`Unable to get visits: ${reason}`);
-            });
-        });
-
-        return defer.promise;
+        return promise;
     }
 
     private _updateVisitDocument(document: Models.WorkItemVisitsDocument): IPromise<Models.WorkItemVisitsDocument> {
@@ -222,7 +221,7 @@ class VisitManager {
             }
             else if(Utils_String.ignoreCaseComparer(pastVisit.user.uniqueName, visit.user.uniqueName) === 0) {
                 // If enough time has not passed since you last visit ignore this one
-                return Q(document);
+                return Promise.resolve(document);
             }
         }
         
@@ -236,7 +235,7 @@ class VisitManager {
        return  VSS.getService<IExtensionDataService>(VSS.ServiceIds.ExtensionData).then((dataService: IExtensionDataService) => {
             return dataService.setDocument(Models.Constants.DocumentCollectionName, document);
         }, (reason) => {
-            return Q.reject(`Unable to set visits: ${reason}`);
+            return Promise.reject(`Unable to set visits`);
         });
     }
 

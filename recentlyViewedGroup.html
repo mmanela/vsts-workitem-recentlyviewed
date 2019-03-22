@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8" />
     <script src="build/VSS.SDK.min.js"></script>
-    <script src="build/moment.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/RecentlyViewed.css">
 </head>
 
@@ -14,7 +13,12 @@
         VSS.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
-            usePlatformStyles: true
+            usePlatformStyles: true,
+            moduleLoaderConfig: {
+                paths: {
+                    "moment": "build/moment.min"
+                }
+            }
         });
         
         // Load main entry point for extension

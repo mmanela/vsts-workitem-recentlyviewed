@@ -1,5 +1,8 @@
 node_modules
 scripts/*.js
+scripts/controls/*.js
 *.vsix
 typings
 dist
+build
+scripts/.baseDir.ts

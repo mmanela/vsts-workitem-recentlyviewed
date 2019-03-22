@@ -1,10 +1,45 @@
 {
     "compilerOptions": {
         "module": "amd",
+        "moduleResolution": "node",
         "sourceMap": false,
-        "rootDir": "./scripts"
+        "target": "es6",
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "jsx": "react",
+        "allowJs": true,
+        "types": [
+            "knockout",
+            "requirejs",
+            "jquery",
+            "vss-web-extension-sdk"
+        ],
+        "lib": [
+            "es2015.promise",
+            "dom",
+            "es5"
+        ]
     },
-   "exclude": [
-       "node_modules"
-   ]
+    "typeAcquisition": {
+        "enable": true
+    },
+    "filesGlob": [
+        "node_modules/vss-web-extension-sdk/typings/*.d.ts",
+        "scripts/**/*.ts"
+    ],
+    "files": [
+        "node_modules/vss-web-extension-sdk/typings/charts.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/index.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/notifications.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/rmo.contracts.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/rmo.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/tfs.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/vss.d.ts",
+        "node_modules/vss-web-extension-sdk/typings/VSS.SDK.d.ts",
+        "scripts/Controls/RecentlyViewedGrid.ts",
+        "scripts/Controls/RecentlyViewedList.ts",
+        "scripts/Models.ts",
+        "scripts/RecentlyViewed.ts",
+        "scripts/VisitManager.ts"
+    ]
 }

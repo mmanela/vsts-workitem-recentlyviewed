@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "vsts-workitem-recentlyviewed",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "name": "Who recently viewed a work item?",
     "scopes": [
         "vso.work"
