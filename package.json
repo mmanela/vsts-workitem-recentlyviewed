@@ -8,7 +8,7 @@
     "grunt-exec": "~0.4.7",
     "grunt-ts": "^6.0.0-beta.22",
     "moment": "*",
-    "tfx-cli": "^0.6.4",
+    "tfx-cli": "^0.12.0",
     "typescript": "^3.0.1",
     "vss-web-extension-sdk": "^5.141.0"
   },
